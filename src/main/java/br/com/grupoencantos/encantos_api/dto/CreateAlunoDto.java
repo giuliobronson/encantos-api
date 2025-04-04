@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class CreateAlunoDto implements Serializable {
     private String cpf;
 
     @NotNull
+    @Past
     private LocalDate dataNascimento;
 
 }
