@@ -2,11 +2,8 @@ package br.com.grupoencantos.encantos_api.models;
 
 import java.time.LocalDate;
 
-import br.com.grupoencantos.encantos_api.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,13 +35,20 @@ public class Aluno {
     @Column(name = "DATA_CADASTRO")
     private LocalDate dataCadastro;
     
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    private Status status; 
+    @Column(name = "ATIVO")
+    private boolean ativo; 
 
     public Aluno() {
         this.dataCadastro = LocalDate.now();
-        this.status = Status.ATIVO;
+        this.ativo = true;
+    }
+
+    public Aluno(String nome, String cpf, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.dataCadastro = LocalDate.now();
+        this.ativo = true;
     }
 
 }

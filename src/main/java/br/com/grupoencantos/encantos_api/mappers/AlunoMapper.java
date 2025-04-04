@@ -15,7 +15,6 @@ public class AlunoMapper {
         dto.setCpf(aluno.getCpf());
         dto.setDataNascimento(aluno.getDataNascimento());
         dto.setDataCadastro(aluno.getDataCadastro());
-        dto.setStatus(aluno.getStatus());
         return dto;
     }
 
