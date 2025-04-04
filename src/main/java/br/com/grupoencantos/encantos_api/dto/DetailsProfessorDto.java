@@ -1,6 +1,5 @@
 package br.com.grupoencantos.encantos_api.dto;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -10,10 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class DetailsAlunoDto implements Serializable {
+public class DetailsProfessorDto {
 
     private String nome;
     private String cpf;
+    private String email;
+    private String telefone;
     private LocalDate dataNascimento;
     private LocalDate dataCadastro;
 

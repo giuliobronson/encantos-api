@@ -10,20 +10,20 @@ import br.com.grupoencantos.encantos_api.models.Aluno;
 public class AlunoMapper {
 
     public DetailsAlunoDto toDto(Aluno aluno) {
-        DetailsAlunoDto dto = new DetailsAlunoDto();
-        dto.setNome(aluno.getNome());
-        dto.setCpf(aluno.getCpf());
-        dto.setDataNascimento(aluno.getDataNascimento());
-        dto.setDataCadastro(aluno.getDataCadastro());
-        return dto;
+        return new DetailsAlunoDto(
+            aluno.getNome(),
+            aluno.getCpf(),
+            aluno.getDataNascimento(),
+            aluno.getDataCadastro()
+        );
     }
 
     public Aluno toEntity(CreateAlunoDto dto) {
-        Aluno aluno = new Aluno();
-        aluno.setNome(dto.getNome());
-        aluno.setCpf(dto.getCpf());
-        aluno.setDataNascimento(dto.getDataNascimento());
-        return aluno;
+        return new Aluno(
+            dto.getNome(),
+            dto.getCpf(),
+            dto.getDataNascimento()
+        );
     }
 
 }
