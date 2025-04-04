@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.grupoencantos.encantos_api.dto.CreateAlunoDto;
 import br.com.grupoencantos.encantos_api.dto.UpdateAlunoDto;
+import br.com.grupoencantos.encantos_api.mappers.AlunoMapper;
 import br.com.grupoencantos.encantos_api.models.Aluno;
 import br.com.grupoencantos.encantos_api.repositories.AlunoRepository;
 
@@ -16,6 +17,9 @@ public class AlunoService {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    @Autowired
+    private AlunoMapper alunoMapper;
+
     public Aluno createAluno(CreateAlunoDto dto) {
         return alunoRepository.findByCpf(dto.getCpf())
             .map(aluno -> {
@@ -24,7 +28,7 @@ public class AlunoService {
                 aluno.setDataNascimento(dto.getDataNascimento());
                 return alunoRepository.save(aluno);
             })
-            .orElseGet(() -> alunoRepository.save(new Aluno(dto.getNome(), dto.getCpf(), dto.getDataNascimento())));
+            .orElseGet(() -> alunoRepository.save(alunoMapper.toEntity(dto)));
     }
 
     public Aluno updateAluno(UpdateAlunoDto dto) {
