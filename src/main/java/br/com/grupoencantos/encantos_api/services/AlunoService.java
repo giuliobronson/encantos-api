@@ -1,0 +1,45 @@
+package br.com.grupoencantos.encantos_api.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.grupoencantos.encantos_api.dto.CreateAlunoDto;
+import br.com.grupoencantos.encantos_api.dto.UpdateAlunoDto;
+import br.com.grupoencantos.encantos_api.models.Aluno;
+import br.com.grupoencantos.encantos_api.repositories.AlunoRepository;
+
+@Service
+public class AlunoService {
+
+    @Autowired
+    private AlunoRepository alunoRepository;
+
+    public Aluno createAluno(CreateAlunoDto dto) {
+        return alunoRepository.findByCpf(dto.getCpf())
+            .map(aluno -> {
+                aluno.setAtivo(true);
+                aluno.setNome(dto.getNome());
+                aluno.setDataNascimento(dto.getDataNascimento());
+                return alunoRepository.save(aluno);
+            })
+            .orElseGet(() -> alunoRepository.save(new Aluno(dto.getNome(), dto.getCpf(), dto.getDataNascimento())));
+    }
+
+    public Aluno updateAluno(UpdateAlunoDto dto) {
+        Aluno aluno = alunoRepository.getReferenceById(dto.getId());
+        Optional.ofNullable(dto.getNome()).ifPresent(aluno::setNome);
+        Optional.ofNullable(dto.getCpf()).ifPresent(aluno::setCpf);
+        Optional.ofNullable(dto.getDataNascimento()).ifPresent(aluno::setDataNascimento);
+        alunoRepository.save(aluno);
+        return aluno;
+    }
+
+    public void deleteAluno(Long id) {
+        Aluno aluno = alunoRepository.getReferenceById(id);
+        aluno.setAtivo(false);
+        alunoRepository.save(aluno);
+    }
+
+}
