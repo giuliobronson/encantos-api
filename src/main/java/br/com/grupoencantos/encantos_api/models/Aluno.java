@@ -12,12 +12,14 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "Aluno")
 @Table(name = "alunos")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Aluno {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class Aluno {
     @Column(name = "NOME")
     private String nome;
 
-    @Column(name = "CPF")
+    @Column(name = "CPF", unique = true)
     private String cpf;
 
     @Column(name = "DATA_NASCIMENTO")
@@ -38,15 +40,10 @@ public class Aluno {
     private LocalDate dataCadastro;
     
     @Column(name = "ATIVO")
-    private boolean ativo; 
+    private Boolean ativo; 
 
     @ManyToMany(mappedBy = "alunos")
     private List<Turma> turma;
-
-    public Aluno() {
-        this.dataCadastro = LocalDate.now();
-        this.ativo = true;
-    }
 
     public Aluno(String nome, String cpf, LocalDate dataNascimento) {
         this.nome = nome;

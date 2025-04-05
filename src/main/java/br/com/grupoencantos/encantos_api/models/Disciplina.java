@@ -10,22 +10,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "Disciplina")
 @Table(name = "disciplinas")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Disciplina {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NOME")
+    @Column(name = "NOME", unique = true)
     private String nome;
+
+    @Column(name = "ATIVO")
+    private Boolean ativo;
 
     @OneToMany(mappedBy = "disciplina")
     private List<Turma> turmas;
+
+    public Disciplina(String nome) {
+        this.nome = nome;
+        this.ativo = true;
+    }
 
 }

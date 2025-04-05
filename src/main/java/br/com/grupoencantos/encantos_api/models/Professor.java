@@ -12,12 +12,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "Professor")
 @Table(name = "professores")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Professor {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class Professor {
     @Column(name = "NOME")
     private String nome;
 
-    @Column(name = "CPF")
+    @Column(name = "CPF", unique = true)
     private String cpf;
 
     @Column(name = "EMAIL")
@@ -44,18 +46,13 @@ public class Professor {
     private LocalDate dataCadastro;
 
     @Column(name = "ATIVO")
-    private boolean ativo;
+    private Boolean ativo;
 
     @OneToMany
     private List<Disciplina> disciplinas;
 
     @OneToMany(mappedBy = "professor")
     private List<Turma> turmas;
-
-    public Professor() {
-        this.dataCadastro = LocalDate.now();
-        this.ativo = true;
-    }
 
     public Professor(String nome, String cpf, String email, String telefone, LocalDate dataNascimento) {
         this.nome = nome;
