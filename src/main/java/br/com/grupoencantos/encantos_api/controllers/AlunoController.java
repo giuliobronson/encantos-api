@@ -18,6 +18,7 @@ import br.com.grupoencantos.encantos_api.mappers.AlunoMapper;
 import br.com.grupoencantos.encantos_api.models.Aluno;
 import br.com.grupoencantos.encantos_api.repositories.AlunoRepository;
 import br.com.grupoencantos.encantos_api.services.AlunoService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +43,7 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<DetailsAlunoDto> createAluno(@RequestBody @Valid CreateAlunoDto dto, UriComponentsBuilder uriBuilder) {
         Aluno aluno = alunoService.createAluno(dto);
         URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
@@ -60,12 +62,14 @@ public class AlunoController {
     }
 
     @PutMapping
+    @Transactional
     public ResponseEntity<DetailsAlunoDto> updateAluno(@RequestBody @Valid UpdateAlunoDto dto) {
         Aluno aluno = alunoService.updateAluno(dto);
         return ResponseEntity.ok(alunoMapper.toDto(aluno));
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> deleteAluno(@PathVariable Long id) {
         alunoService.deleteAluno(id);
         return ResponseEntity.noContent().build();

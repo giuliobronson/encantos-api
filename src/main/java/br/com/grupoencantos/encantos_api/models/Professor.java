@@ -1,13 +1,16 @@
 package br.com.grupoencantos.encantos_api.models;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,11 +39,18 @@ public class Professor {
     @Column(name = "DATA_NASCIMENTO")
     private LocalDate dataNascimento;
 
+    @Setter(AccessLevel.NONE)
     @Column(name = "DATA_CADASTRO")
     private LocalDate dataCadastro;
 
     @Column(name = "ATIVO")
     private boolean ativo;
+
+    @OneToMany
+    private List<Disciplina> disciplinas;
+
+    @OneToMany(mappedBy = "professor")
+    private List<Turma> turmas;
 
     public Professor() {
         this.dataCadastro = LocalDate.now();

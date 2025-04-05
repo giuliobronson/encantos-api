@@ -24,6 +24,7 @@ import br.com.grupoencantos.encantos_api.mappers.ProfessorMapper;
 import br.com.grupoencantos.encantos_api.models.Professor;
 import br.com.grupoencantos.encantos_api.repositories.ProfessorRepository;
 import br.com.grupoencantos.encantos_api.services.ProfessorService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -40,6 +41,7 @@ public class ProfessorController {
     private ProfessorService professorService;
     
     @PostMapping
+    @Transactional
     public ResponseEntity<DetailsProfessorDto> createProfessor(@RequestBody @Valid CreateProfessorDto dto, UriComponentsBuilder uriBuilder) {
         Professor professor = professorService.createProfessor(dto);
         URI uri = uriBuilder.path("/professores/{id}").buildAndExpand(professor.getId()).toUri();
@@ -58,12 +60,14 @@ public class ProfessorController {
     }
 
     @PutMapping
+    @Transactional
     public ResponseEntity<DetailsProfessorDto> updateProfessor(@RequestBody @Valid UpdateProfessorDto dto) {
         Professor professor = professorService.updateProfessor(dto);
         return ResponseEntity.ok(professorMapper.toDto(professor));
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> deleteProfessor(@PathVariable Long id) {
         professorService.deleteProfessor(id);
         return ResponseEntity.noContent().build();
