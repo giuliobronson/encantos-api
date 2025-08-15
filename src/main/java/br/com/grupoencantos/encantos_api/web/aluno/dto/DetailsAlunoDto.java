@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DetailsAlunoDto implements Serializable {
 
+    private Long id;
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;

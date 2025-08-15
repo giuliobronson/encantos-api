@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -56,8 +57,8 @@ public class AlunoController {
     }
 
     @GetMapping
-    public Page<DetailsAlunoDto> getAlunos(@PageableDefault(size = 10, sort = {"nome"}) Pageable pagination) {
-        return alunoRepository.findAllByAtivoTrue(pagination).map(aluno -> alunoMapper.toDto(aluno));
+    public Page<DetailsAlunoDto> getAlunos(@RequestParam String filter, @PageableDefault(size = 10, sort = {"id"}) Pageable pagination) {
+        return alunoService.getAlunosWithFilter(filter, pagination).map(alunoMapper::toDto);
     }
 
     @PutMapping

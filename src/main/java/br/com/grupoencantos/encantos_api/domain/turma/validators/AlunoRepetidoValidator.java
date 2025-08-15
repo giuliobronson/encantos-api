@@ -10,7 +10,7 @@ import br.com.grupoencantos.encantos_api.domain.turma.TurmaRepository;
 import br.com.grupoencantos.encantos_api.web.turma.dto.SubscribeAlunoDto;
 
 @Component
-public class AlunoRepetidoValidator {
+public class AlunoRepetidoValidator implements CadastroAlunoValidator {
 
     @Autowired
     private TurmaRepository turmaRepository;

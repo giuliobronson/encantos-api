@@ -3,6 +3,8 @@ package br.com.grupoencantos.encantos_api.domain.aluno;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.grupoencantos.encantos_api.web.aluno.AlunoMapper;
@@ -27,6 +29,10 @@ public class AlunoService {
                 return alunoRepository.save(aluno);
             })
             .orElseGet(() -> alunoRepository.save(alunoMapper.toEntity(dto)));
+    }
+
+    public Page<Aluno> getAlunosWithFilter(String filter, Pageable pagination) {
+        return alunoRepository.findAll(AlunoSpecification.toPredicate(filter), pagination);
     }
 
     public Aluno updateAluno(UpdateAlunoDto dto) {

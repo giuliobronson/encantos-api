@@ -74,7 +74,7 @@ public class TurmaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/subscribe")
     @Transactional
     public ResponseEntity<DetailsTurmaDto> subscribeAluno(@RequestBody @Valid SubscribeAlunoDto dto) {
         Turma turma = turmaService.subscribeAluno(dto);

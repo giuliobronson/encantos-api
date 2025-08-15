@@ -11,6 +11,7 @@ public class AlunoMapper {
 
     public DetailsAlunoDto toDto(Aluno aluno) {
         return new DetailsAlunoDto(
+            aluno.getId(),
             aluno.getNome(),
             aluno.getCpf(),
             aluno.getDataNascimento(),
